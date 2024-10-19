@@ -1,6 +1,6 @@
 # Netflix Movies and TV shows Data Analysis using SQL
 
-![Netflix Logo](https://github.com/Himanshu-afk-gg/netflix_sql_project/blob/main/Netflix%20logo.png) ![SQL Logo](https://github.com/Himanshu-afk-gg/netflix_sql_project/blob/main/sql%20logo.png)
+![Netflix Logo](https://github.com/Himanshu-afk-gg/netflix_sql_project/blob/main/Netflix%20logo.png) ![SQL Logo](https://github.com/Himanshu-afk-gg/netflix_sql_project/blob/main/postgre%20sql%20logo.png)
 
 # Netflix Content Analysis
 
