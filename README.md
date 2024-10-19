@@ -144,6 +144,19 @@ ORDER BY total_count desc;
 
 ```
 
+### 10. Find each years number of content released/added in india on netflix. return top 5 year with the highest content release/added
+```sql
+SELECT 
+EXTRACT(YEAR FROM TO_DATE(date_added, 'MONTH DD, YYYY')) AS year,
+COUNT(*)
+FROM netflix
+WHERE country = 'India'
+GROUP BY 1
+ORDER BY 2 DESC
+LIMIT 5;
+
+```
+
 ## Insights from the Analysis
 Here are the key insights generated from the SQL queries:
 
