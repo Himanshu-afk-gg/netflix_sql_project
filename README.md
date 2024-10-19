@@ -21,7 +21,7 @@ The main objective of this analysis is to answer several business-related questi
 
   ## Dataset
 
-The dataset used in this analysis can be found [here]([URL_TO_YOUR_CSV_FILE](https://www.kaggle.com/datasets/shivamb/netflix-shows)).
+The dataset used in this analysis can be found [here]([[URL_TO_YOUR_CSV_FILE](https://www.kaggle.com/datasets/shivamb/netflix-shows)](https://github.com/Himanshu-afk-gg/netflix_sql_project/blob/main/netflix_titles.csv)).
 
 
 ## Schema
