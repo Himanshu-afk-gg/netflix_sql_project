@@ -19,6 +19,11 @@ The main objective of this analysis is to answer several business-related questi
 - What content has specific directors or has a certain number of seasons?
 - How many content items are in each genre?
 
+  ## Dataset
+
+The dataset used in this analysis can be found [here]([URL_TO_YOUR_CSV_FILE](https://www.kaggle.com/datasets/shivamb/netflix-shows)).
+
+
 ## Schema
 The table `netflix` is structured as follows:
 
