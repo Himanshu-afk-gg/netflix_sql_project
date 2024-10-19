@@ -44,51 +44,103 @@ CREATE TABLE netflix(
 ## Solutions
 Here are the SQL queries used to answer each business problem:
 
+
+### 1. Count the number of movies vs TV shows
 ```sql
 
--- 1. Count the number of movies vs TV shows
 SELECT type, COUNT(type) as total_content
 FROM netflix
 GROUP BY type;
 
--- 2. Find the most common rating for movies and TV shows
-WITH temp_table AS (
-    SELECT type, MAX(rating) as rating_name, COUNT(rating) as total_rating,
-    RANK() OVER(PARTITION BY type ORDER BY COUNT(rating) DESC) as ranking
-    FROM netflix
-    GROUP BY type, rating
+```
+
+### 2. Find the most common rating for movies and TV shows
+```sql
+WITH temp_table AS(SELECT
+type,
+MAX(rating) as rating_name,
+COUNT(rating) as total_rating,
+RANK() OVER(PARTITION BY type ORDER BY COUNT(rating) DESC) as ranking
+FROM netflix
+GROUP BY type, rating
 )
-SELECT type, rating_name FROM temp_table WHERE ranking = 1;
 
--- 3. List all movies released in a specific year (e.g. 2020)
-SELECT title as Movies_released_in_2020 FROM netflix WHERE type = 'Movie' AND release_year = 2020;
+SELECT type,rating_name
+FROM temp_table
+WHERE ranking = 1;
 
--- 4. Find the top 5 countries with the most content on Netflix
-SELECT UNNEST(STRING_TO_ARRAY(country, ',')) as distinct_country, COUNT(show_id)
+```
+
+### 3. List all movies released in a specific year (e.g. 2020)
+```sql
+SELECT
+title as Movies_released_in_2020
 FROM netflix
-GROUP BY 1
-ORDER BY 2 DESC
-LIMIT 5;
+WHERE type = 'Movie' AND release_year = 2020;
 
--- 5. Identify the longest Movie
-SELECT title, type, CAST(REPLACE(duration,'min','') AS INT) AS minutes
+```
+
+### 4. Find the top 5 countries with the most content on Netflix
+```sql
+SELECT
+	UNNEST(STRING_TO_ARRAY(country, ',')) as distinct_country,
+	COUNT(show_id)
+	FROM netflix
+	GROUP BY 1
+	ORDER BY 2 DESC
+	LIMIT 5;
+
+
+```
+
+### 5. Identify the longest Movie
+```sql
+SELECT
+	title,
+	type,
+	CAST(REPLACE(duration,'min','') AS INT) AS minutes
+	FROM netflix
+		WHERE type = 'Movie'
+		ORDER BY minutes desc;
+
+```
+
+### 6. Find content added in the last 2 years
+```sql
+SELECT *
 FROM netflix
-WHERE type = 'Movie'
-ORDER BY minutes DESC;
+WHERE TO_DATE(DATE_ADDED, 'MONTH DD, YYYY') >= CURRENT_DATE - INTERVAL '2 years'
 
--- 6. Find content added in the last 2 years
-SELECT * FROM netflix WHERE TO_DATE(DATE_ADDED, 'MONTH DD, YYYY') >= CURRENT_DATE - INTERVAL '2 years';
+```
 
--- 7. Find all movies/tv shows by the director 'Rajiv Chilaka'
-SELECT * FROM netflix WHERE director LIKE '%Rajiv Chilaka%';
-
--- 8. List all TV shows with more than 5 seasons
-SELECT * FROM netflix WHERE type = 'TV Show' AND SPLIT_PART(duration, ' ', 1)::numeric > 5;
-
--- 9. Count the number of content items in each genre
-SELECT UNNEST(STRING_TO_ARRAY(listed_in, ',')) as distinct_genre, COUNT(listed_in) as total_genre
+### 7. Find all movies/tv shows by the director 'Rajiv Chilaka'
+```sql
+SELECT
+*
 FROM netflix
-GROUP BY 1;
+WHERE director LIKE '%Rajiv Chilaka%';
+
+```
+
+### 8. List all TV shows with more than 5 seasons
+```sql
+SELECT
+*
+FROM netflix
+WHERE type = 'TV Show'
+AND
+SPLIT_PART(duration, ' ', 1)::numeric > 5;
+
+```
+
+### 9. Count the number of content items in each genre
+```sql
+SELECT
+UNNEST(STRING_TO_ARRAY(listed_in, ',')) as distinct_genre,
+COUNT(listed_in) as total_count
+FROM netflix
+GROUP BY distinct_genre
+ORDER BY total_count desc;
 
 ```
 
